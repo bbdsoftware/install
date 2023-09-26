@@ -25,19 +25,19 @@ whatchanged_windows_amd64.tar.gz
 install latest version
 
 ```bash
-curl -fsSL https://github.com/release-lab/install/raw/v1/install.sh | bash -s -- -r={owner}/{repo}
+curl -fsSL https://github.com/bbdsoftware/install/raw/v1/install.sh | bash -s -- -r={owner}/{repo}
 ```
 
 install specified version
 
 ```bash
-curl -fsSL https://github.com/release-lab/install/raw/v1/install.sh | bash -s -- -r={owner}/{repo} -v={version}
+curl -fsSL https://github.com/bbdsoftware/install/raw/v1/install.sh | bash -s -- -r={owner}/{repo} -v={version}
 ```
 
 specified the executable filename name
 
 ```bash
-curl -fsSL https://github.com/release-lab/install/raw/v1/install.sh | bash -s -- -r={owner}/{repo} -e={exe}
+curl -fsSL https://github.com/bbdsoftware/install/raw/v1/install.sh | bash -s -- -r={owner}/{repo} -e={exe}
 ```
 
 install from a `Github Mirror` website (Very helpful if you got network trouble to accessing Github). see [forward-cli](https://github.com/axetroy/forward-cli)
@@ -47,7 +47,7 @@ install from a `Github Mirror` website (Very helpful if you got network trouble 
 $ forward --proxy-external https://github.com
 2022/01/26 16:52:42 Proxy 'http://192.168.4.105:80' to 'https://github.com'
 # install
-$ curl -fsSL http://192.168.4.105/release-lab/install/raw/v1/install.sh | bash -s -- -r=release-lab/whatchanged -g=http://192.168.4.105
+$ curl -fsSL http://192.168.4.105/bbdsoftware/install/raw/v1/install.sh | bash -s -- -r=release-lab/whatchanged -g=http://192.168.4.105
 ```
 
 ### 2. PowerShell (Windows):
@@ -55,19 +55,19 @@ $ curl -fsSL http://192.168.4.105/release-lab/install/raw/v1/install.sh | bash -
 install latest version
 
 ```powershell
-$r="{owner}/{repo}";iwr https://github.com/release-lab/install/raw/v1/install.ps1 -useb | iex
+$r="{owner}/{repo}";iwr https://github.com/bbdsoftware/install/raw/v1/install.ps1 -useb | iex
 ```
 
 install specified version
 
 ```powershell
-$r="{owner}/{repo}";$v="{version}";iwr https://github.com/release-lab/install/raw/v1/install.ps1 -useb | iex
+$r="{owner}/{repo}";$v="{version}";iwr https://github.com/bbdsoftware/install/raw/v1/install.ps1 -useb | iex
 ```
 
 specified the executable filename name
 
 ```bash
-$r="{owner}/{repo}";$e="{exe}";iwr https://github.com/release-lab/install/raw/v1/install.ps1 -useb | iex
+$r="{owner}/{repo}";$e="{exe}";iwr https://github.com/bbdsoftware/install/raw/v1/install.ps1 -useb | iex
 ```
 
 install from a `Github Mirror` website (Very helpful if you got network trouble to accessing Github). see [forward-cli](https://github.com/axetroy/forward-cli)
@@ -77,5 +77,5 @@ install from a `Github Mirror` website (Very helpful if you got network trouble 
 $ forward --proxy-external https://github.com
 2022/01/26 16:52:42 Proxy 'http://192.168.4.105:80' to 'https://github.com'
 # install
-$ $r="release-lab/whatchanged";$g="http://192.168.4.105";iwr http://192.168.4.105/release-lab/install/raw/v1/install.ps1 -useb | iex
+$ $r="release-lab/whatchanged";$g="http://192.168.4.105";iwr http://192.168.4.105/bbdsoftware/install/raw/v1/install.ps1 -useb | iex
 ```

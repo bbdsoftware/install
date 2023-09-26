@@ -7,6 +7,12 @@ if [ $# -eq 0 ]; then
     exit 1
 fi
 
+if ! command -v gh >/dev/null 2>&1; then
+    echo "gh is not installed. Visit https://github.com/cli/cli#installation for installation instructions."
+    exit 1
+fi
+
+
 # eg. release-lab/whatchanged
 target=""
 owner=""
@@ -92,12 +98,6 @@ if [ -z "$exe_name" ]; then
     echo "INFO: if you want to specify the name of the executable, set flag --exe=name"
 fi
 
-if [ -z "$githubUrl" ]; then
-    githubUrl="https://github.com"
-fi
-if [ -z "$githubApiUrl" ]; then
-    githubApiUrl="https://api.github.com"
-fi
 
 downloadFolder="${HOME}/Downloads"
 mkdir -p ${downloadFolder} # make sure download folder exists
@@ -107,36 +107,20 @@ file_name="${exe_name}_${os}_${arch}.tar.gz" # the file name should be download
 downloaded_file="${downloadFolder}/${file_name}" # the file path should be download
 executable_folder="/usr/local/bin" # Eventually, the executable file will be placed here
 
-# if version is empty
+
+echo "[1/3] Downloading release ${file_name} using gh cli..."
 if [ -z "$version" ]; then
-    asset_path=$(
-        command curl -L \
-            -H "Accept: application/vnd.github+json" \
-            -H "X-GitHub-Api-Version: 2022-11-28" \
-            ${githubApiUrl}/repos/${owner}/${repo}/releases |
-        command grep -o "/${owner}/${repo}/releases/download/.*/${file_name}" |
-        command head -n 1
-    )
-    if [[ ! "$asset_path" ]]; then
-        echo "ERROR: unable to find a release asset called ${file_name}"
-        exit 1
-    fi
-    asset_uri="${githubUrl}${asset_path}"
+    gh release download --repo ${owner}/${repo} --pattern "${file_name}" -D ${downloadFolder} --clobber
 else
-    asset_uri="${githubUrl}/${owner}/${repo}/releases/download/${version}/${file_name}"
+    gh release download --repo ${owner}/${repo} -v "${version}" --pattern "${file_name}" -D ${downloadFolder} --clobber
 fi
 
-echo "[1/3] Download ${asset_uri} to ${downloadFolder}"
-rm -f ${downloaded_file}
-curl --fail --location --output "${downloaded_file}" "${asset_uri}"
-
-echo "[2/3] Install ${exe_name} to the ${executable_folder}"
+echo "[2/3] Installing ${exe_name}..."
 tar -xz -f ${downloaded_file} -C ${executable_folder}
 exe=${executable_folder}/${exe_name}
 chmod +x ${exe}
 
-echo "[3/3] Set environment variables"
-echo "${exe_name} was installed successfully to ${exe}"
+echo "[3/3] Installation complete!"
 if command -v $exe_name --version >/dev/null; then
     echo "Run '$exe_name --help' to get started"
 else
@@ -146,3 +130,4 @@ else
 fi
 
 exit 0
+

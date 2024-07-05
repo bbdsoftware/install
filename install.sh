@@ -112,7 +112,7 @@ echo "[1/3] Downloading release ${file_name} using gh cli..."
 if [ -z "$version" ]; then
     gh release download --repo ${owner}/${repo} --pattern "${file_name}" -D ${downloadFolder} --clobber
 else
-    gh release download --repo ${owner}/${repo} -v "${version}" --pattern "${file_name}" -D ${downloadFolder} --clobber
+    gh release download ${version} --repo ${owner}/${repo}  --pattern "${file_name}" -D ${downloadFolder} --clobber
 fi
 
 echo "[2/3] Installing ${exe_name}..."
